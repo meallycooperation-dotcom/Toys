@@ -21,6 +21,24 @@ type OrderItemPayload = {
   total: number
 }
 
+function getPaystackSecret() {
+  const rawSecret = process.env.PAYSTACK_SECRET?.trim()
+
+  if (!rawSecret) {
+    throw new Error("PAYSTACK_SECRET is required.")
+  }
+
+  if (rawSecret.toLowerCase().startsWith("authorization bearer ")) {
+    return rawSecret.slice("authorization bearer ".length).trim()
+  }
+
+  if (rawSecret.toLowerCase().startsWith("bearer ")) {
+    return rawSecret.slice("bearer ".length).trim()
+  }
+
+  return rawSecret
+}
+
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return res.status(405).end()
 
@@ -105,7 +123,7 @@ export default async function handler(req: any, res: any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET ?? ""}`,
+          Authorization: `Bearer ${getPaystackSecret()}`,
         },
         body: JSON.stringify({
           email,

@@ -1,6 +1,6 @@
 /// /api/create-payment.ts
 import axios from "axios"
-import { supabase } from "./_lib/supabase"
+import { supabase } from "../src/lib/supabase"
 
 declare const process: {
   env: {

@@ -1,13 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import type { Product } from '../lib/supabase'
-import { useCart } from '../context/CartContext'
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useCart } from "../context/CartContext"
+import type { Product } from "../lib/supabase"
 
 type Props = {
   product: Product
+  queryString?: string
 }
 
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product, queryString = "" }: Props) {
   const navigate = useNavigate()
   const { addToCart } = useCart()
   const [addedToCart, setAddedToCart] = useState(false)
@@ -19,7 +20,7 @@ export default function ProductCard({ product }: Props) {
       name: product.name,
       price: product.price,
       quantity: 1,
-      image_url: product.image_url || '',
+      image_url: product.image_url || "",
       stock: product.stock,
     })
     setAddedToCart(true)
@@ -28,34 +29,34 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div
-      onClick={() => navigate(`/product/${product.id}`)}
-      className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition cursor-pointer"
+      onClick={() => navigate(`/product/${product.id}${queryString}`)}
+      className="lux-card group overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(212,175,55,0.3)]"
     >
+      <div className="relative">
+        <img
+          src={product.image_url || "https://via.placeholder.com/300"}
+          alt={product.name}
+          className="h-44 w-full object-cover transition duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080407] via-transparent to-transparent opacity-70" />
+        <div className="absolute left-3 top-3">
+          <span className="lux-badge lux-badge-red">New</span>
+        </div>
+      </div>
 
-      {/* Image */}
-      <img
-        src={product.image_url || 'https://via.placeholder.com/300'}
-        alt={product.name}
-        className="w-full h-40 object-cover"
-      />
-
-      {/* Info */}
-      <div className="p-3">
-        <h2 className="text-sm font-medium">{product.name}</h2>
-        <p className="text-gray-600 text-sm mt-1">
+      <div className="p-4">
+        <h2 className="text-sm font-semibold text-[color:var(--text-primary)]">{product.name}</h2>
+        <p className="mt-1 text-sm text-[color:var(--text-muted)]">
           {product.currency} {product.price}
         </p>
 
-        {/* Add to Cart */}
         <button
           onClick={handleAddToCart}
-          className={`mt-2 w-full py-1 rounded text-sm font-semibold transition ${
-            addedToCart
-              ? 'bg-green-600 text-white hover:bg-green-700'
-              : 'bg-black text-white hover:bg-gray-900'
+          className={`mt-4 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+            addedToCart ? "bg-green-600 text-white" : "lux-primary"
           }`}
         >
-          {addedToCart ? '✓ Added' : 'Add to Cart'}
+          {addedToCart ? "Added" : "Add to Cart"}
         </button>
       </div>
     </div>

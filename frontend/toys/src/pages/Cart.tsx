@@ -1,79 +1,85 @@
-import { useNavigate } from 'react-router-dom'
-import { ChevronLeft, Trash2, ShoppingCart } from 'lucide-react'
-import { useCart } from '../context/CartContext'
+import { ChevronLeft, ShoppingCart, Trash2 } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { useCart } from "../context/CartContext"
 
 export default function Cart() {
   const navigate = useNavigate()
   const { items, removeFromCart, updateQuantity, totalPrice } = useCart()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="w-full bg-white shadow-sm px-4 py-3">
+    <div className="page-frame px-4 py-4">
+      <div className="lux-header sticky top-0 z-20 rounded-2xl px-4 py-3">
         <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-gray-700 hover:text-gray-900"
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2 text-[color:var(--text-primary)] transition hover:text-[#d4af37]"
         >
           <ChevronLeft size={20} />
-          <span>Back</span>
+          <span className="font-medium">Back</span>
         </button>
       </div>
 
-      {/* Content */}
-      <div className="max-w-2xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>
+      <div className="mx-auto mt-6 max-w-4xl space-y-6">
+        <div className="lux-card-elevated p-6">
+          <div className="flex items-center gap-3">
+            <span className="lux-badge lux-badge-red">Cart</span>
+            <h1 className="lux-title text-3xl sm:text-4xl">Shopping Cart</h1>
+          </div>
+        </div>
 
         {items.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm p-12 text-center">
-            <ShoppingCart size={48} className="mx-auto text-gray-300 mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
-            <p className="text-gray-600 mb-6">Add some products to get started!</p>
-            <button
-              onClick={() => navigate('/')}
-              className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-900 transition"
-            >
+          <div className="lux-card-elevated p-10 text-center">
+            <ShoppingCart size={48} className="mx-auto mb-4 text-[color:var(--text-muted)]" />
+            <h2 className="text-xl font-semibold text-[color:var(--text-primary)]">Your cart is empty</h2>
+            <p className="lux-subtitle mt-2">Add some products to get started.</p>
+            <button onClick={() => navigate("/")} className="lux-primary mt-6 rounded-full px-6 py-3">
               Continue Shopping
             </button>
           </div>
         ) : (
-          <div className="space-y-4">
-            {/* Cart Items */}
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <div className="divide-y">
+          <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+            <div className="lux-card-elevated overflow-hidden">
+              <div className="divide-y divide-[rgba(255,255,255,0.08)]">
                 {items.map((item) => (
-                  <div key={item.product_id} className="p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
+                  <div key={item.product_id} className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-1 items-center gap-4">
                       <img
                         src={item.image_url}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded"
+                        className="h-16 w-16 rounded-xl object-cover ring-1 ring-[rgba(255,255,255,0.08)]"
                       />
                       <div>
-                        <h3 className="font-semibold">{item.name}</h3>
-                        <p className="text-gray-600 text-sm">Ksh.{item.price}</p>
+                        <h3 className="font-semibold text-[color:var(--text-primary)]">{item.name}</h3>
+                        <p className="text-sm text-[color:var(--text-muted)]">Ksh. {item.price}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      {/* Quantity Controls */}
-                      <div className="flex items-center border rounded-lg">
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      <div className="flex items-center overflow-hidden rounded-full border border-[rgba(255,255,255,0.12)]">
                         <button
                           onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                          className="px-2 py-1 hover:bg-gray-100"
+                          className="px-3 py-2 transition hover:bg-[rgba(255,255,255,0.08)]"
                         >
-                          −
+                          -
                         </button>
-                        <span className="px-3 py-1 border-l border-r text-sm">{item.quantity}</span>
+                        <span className="border-x border-[rgba(255,255,255,0.12)] px-4 py-2 text-sm">
+                          {item.quantity}
+                        </span>
                         <button
                           onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                          className="px-2 py-1 hover:bg-gray-100"
+                          className="px-3 py-2 transition hover:bg-[rgba(255,255,255,0.08)]"
                         >
                           +
                         </button>
                       </div>
-                      <p className="font-semibold w-16 text-right">Ksh.{(item.price * item.quantity).toFixed(2)}</p>
+
+                      <p className="min-w-24 text-right font-semibold text-[color:var(--text-primary)]">
+                        Ksh. {(item.price * item.quantity).toFixed(2)}
+                      </p>
+
                       <button
                         onClick={() => removeFromCart(item.product_id)}
-                        className="p-2 hover:bg-gray-100 rounded-lg text-red-600"
+                        className="rounded-full p-2 text-red-400 transition hover:bg-[rgba(255,255,255,0.08)] hover:text-red-300"
+                        aria-label="Remove item"
                       >
                         <Trash2 size={18} />
                       </button>
@@ -83,29 +89,25 @@ export default function Cart() {
               </div>
             </div>
 
-            {/* Summary */}
-            <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
-              <div className="flex justify-between text-gray-600">
+            <div className="lux-card-elevated space-y-4 p-6">
+              <div className="flex justify-between text-[color:var(--text-muted)]">
                 <span>Subtotal</span>
-                <span>Ksh.{totalPrice.toFixed(2)}</span>
+                <span>Ksh. {totalPrice.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-[color:var(--text-muted)]">
                 <span>Shipping</span>
-                <span>Ksh.0.00</span>
+                <span>Ksh. 0.00</span>
               </div>
-              <div className="border-t pt-4 flex justify-between font-bold text-lg">
+              <div className="flex justify-between border-t border-[rgba(255,255,255,0.08)] pt-4 text-lg font-bold">
                 <span>Total</span>
-                <span>Ksh.{totalPrice.toFixed(2)}</span>
+                <span>Ksh. {totalPrice.toFixed(2)}</span>
               </div>
-              <button
-                onClick={() => navigate('/checkout')}
-                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition"
-              >
+              <button onClick={() => navigate("/checkout")} className="lux-primary w-full rounded-xl py-3">
                 Checkout
               </button>
               <button
-                onClick={() => navigate('/')}
-                className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition"
+                onClick={() => navigate("/")}
+                className="lux-secondary w-full rounded-xl py-3"
               >
                 Continue Shopping
               </button>

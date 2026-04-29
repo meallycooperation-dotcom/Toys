@@ -14,6 +14,8 @@ export type Product = {
   currency: string
   stock: number
   is_active: boolean
+  category: "male" | "female" | null
+  level: "intense" | "luxurious" | "playful" | null
   created_at: string
   updated_at: string
 }
@@ -36,4 +38,26 @@ export type Profile = {
   role: string
   created_at: string
   updated_at: string
+}
+
+export type Order = {
+  id: string
+  user_id: string | null
+  email: string
+  total_amount: number
+  currency: string | null
+  status: string | null
+  paystack_reference: string | null
+  created_at: string
+  updated_at: string | null
+  location: string | null
+}
+
+export type OrderItem = {
+  id: string
+  order_id: string | null
+  product_id: string | null
+  quantity: number
+  price_at_purchase: number
+  created_at: string
 }

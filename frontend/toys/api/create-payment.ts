@@ -4,6 +4,7 @@ import { getSupabase } from "./_lib/supabase.js"
 declare const process: {
   env: {
     PAYSTACK_SECRET?: string
+    VITE_PAYSTACK_SECRET?: string
   }
 }
 
@@ -28,7 +29,9 @@ type OrderItemPayload = {
 }
 
 function getPaystackSecret() {
-  const rawSecret = process.env.PAYSTACK_SECRET?.trim()
+  const rawSecret =
+    process.env.PAYSTACK_SECRET?.trim() ||
+    process.env.VITE_PAYSTACK_SECRET?.trim()
 
   if (!rawSecret) {
     throw new Error("PAYSTACK_SECRET is required.")

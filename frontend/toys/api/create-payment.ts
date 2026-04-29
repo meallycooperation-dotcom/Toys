@@ -1,6 +1,5 @@
 /// /api/create-payment.ts
-import axios from "axios"
-import { supabase } from "../src/lib/supabase"
+import { getSupabase } from "./_lib/supabase"
 
 declare const process: {
   env: {
@@ -34,6 +33,8 @@ export default async function handler(req: any, res: any) {
   const { items, email, location } = req.body as CreatePaymentRequest
 
   try {
+    const supabase = getSupabase()
+
     // 1. VERIFY ITEMS FROM DB (CRITICAL SECURITY STEP)
     const ids = items.map((i) => i.id)
 
@@ -112,26 +113,36 @@ export default async function handler(req: any, res: any) {
     if (itemsError) throw itemsError
 
     // 5. INIT PAYSTACK PAYMENT
-    const paystackResponse = await axios.post(
+    const paystackResponse = await fetch(
       "https://api.paystack.co/transaction/initialize",
       {
-        email,
-        amount: totalAmount * 100,
-        reference: order.id,
-      },
-      {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET ?? ''}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET ?? ""}`,
         },
+        body: JSON.stringify({
+          email,
+          amount: totalAmount * 100,
+          reference: order.id,
+        }),
       }
     )
 
-    if (!paystackResponse.data?.data?.authorization_url) {
+    const paystackData = await paystackResponse.json().catch(() => null)
+
+    if (!paystackResponse.ok) {
+      throw new Error(
+        paystackData?.message || paystackData?.error || "Paystack initialization failed"
+      )
+    }
+
+    if (!paystackData?.data?.authorization_url) {
       throw new Error("Paystack did not return authorization URL")
     }
 
     return res.status(200).json({
-      authorization_url: paystackResponse.data.data.authorization_url,
+      authorization_url: paystackData.data.authorization_url,
     })
 
   } catch (err) {

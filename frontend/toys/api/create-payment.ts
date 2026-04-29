@@ -1,5 +1,5 @@
 /// /api/create-payment.ts
-import { getSupabase } from "./_lib/supabase"
+import { getSupabase } from "./_lib/supabase.js"
 
 declare const process: {
   env: {

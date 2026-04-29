@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { ChevronLeft, ShoppingBag, Star } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Seo from "../components/Seo"
 import { useProfile } from "../hooks/useProfile"
 import {
   supabase,
@@ -305,6 +306,12 @@ export default function Orders() {
 
   return (
     <div className="page-frame px-4 py-4">
+      <Seo
+        title="Orders"
+        description="Review your Toys order history, delivery status, and product ratings."
+        path="/orders"
+        noIndex
+      />
       <div className="lux-header sticky top-0 z-20 rounded-2xl px-4 py-3">
         <button
           type="button"

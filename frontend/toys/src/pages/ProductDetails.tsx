@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ChevronLeft, ShoppingCart, Star } from "lucide-react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useCart } from "../context/CartContext"
+import Seo from "../components/Seo"
 import { supabase, type Product, type ProductImage } from "../lib/supabase"
 import ProductCard from "../components/ProductCard"
 
@@ -105,6 +106,14 @@ export default function ProductDetails() {
 
   return (
     <div className="page-frame px-4 py-4">
+      <Seo
+        title={product ? `${product.name} | Premium Adult Toys` : "Premium Adult Toys"}
+        description={
+          product?.description ||
+          "Explore premium adult toys, intimate wellness essentials, and discreet delivery for a smoother shopping experience."
+        }
+        path={id ? `/product/${id}` : "/product"}
+      />
       <div className="lux-header sticky top-0 z-20 rounded-2xl px-4 py-3">
         <button
           onClick={() => navigate(`/${location.search}`)}

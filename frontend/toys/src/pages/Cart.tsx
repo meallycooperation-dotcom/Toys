@@ -1,5 +1,6 @@
 import { ChevronLeft, ShoppingCart, Trash2 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Seo from "../components/Seo"
 import { useCart } from "../context/CartContext"
 
 export default function Cart() {
@@ -8,6 +9,12 @@ export default function Cart() {
 
   return (
     <div className="page-frame px-4 py-4">
+      <Seo
+        title="Shopping Cart"
+        description="Review the adult toys and intimate wellness products in your cart before checkout."
+        path="/cart"
+        noIndex
+      />
       <div className="lux-header sticky top-0 z-20 rounded-2xl px-4 py-3">
         <button
           onClick={() => navigate("/")}

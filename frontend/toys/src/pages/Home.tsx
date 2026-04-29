@@ -2,6 +2,7 @@ import { Search, ShoppingCart, User } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
+import Seo from "../components/Seo"
 import { useCart } from "../context/CartContext"
 import { useProducts } from "../hooks/useProducts"
 
@@ -77,6 +78,11 @@ export default function Home() {
 
   return (
     <div className="page-frame">
+      <Seo
+        title="Premium Adult Toys & Intimate Wellness"
+        description="Shop premium adult toys, intimate wellness products, and discreet delivery from a curated catalog built for confidence and comfort."
+        path="/"
+      />
       <div className="lux-header sticky top-0 z-30 px-4 py-4">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">

@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Seo from "../components/Seo"
 import { supabase } from "../lib/supabase"
 
 export default function Login() {
@@ -46,6 +47,12 @@ export default function Login() {
 
   return (
     <div className="page-frame flex items-center justify-center px-4 py-8">
+      <Seo
+        title="Login"
+        description="Sign in to manage your Toys orders, ratings, and account details."
+        path="/login"
+        noIndex
+      />
       <div className="lux-card-elevated w-full max-w-md p-6 sm:p-8">
         <p className="lux-chip lux-chip-accent w-fit">Welcome back</p>
         <h1 className="lux-title mt-3 text-3xl sm:text-4xl">Log in</h1>

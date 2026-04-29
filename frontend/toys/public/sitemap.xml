@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://toys-tau.vercel.app/</loc>
+    <lastmod>2026-04-29T11:56:03.763Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://toys-tau.vercel.app/product/d0f48f85-ab2b-4052-ba04-b1bd824d3b28</loc>
+    <lastmod>2026-04-27T15:27:29.148Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toys-tau.vercel.app/product/f903164a-c043-4ef0-87cd-4414a673b46c</loc>
+    <lastmod>2026-04-29T07:10:49.059Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toys-tau.vercel.app/product/9e24921b-af19-40ce-a89a-7905196455ce</loc>
+    <lastmod>2026-04-27T15:20:38.840Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

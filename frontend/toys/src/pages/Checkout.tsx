@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { ChevronLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Seo from "../components/Seo"
 import { useCart } from "../context/CartContext"
 import { useProfile } from "../hooks/useProfile"
 import { supabase } from "../lib/supabase"
@@ -99,6 +100,12 @@ export default function Checkout() {
 
   return (
     <div className="page-frame px-4 py-6">
+      <Seo
+        title="Checkout"
+        description="Complete your adult toys order with secure checkout and discreet delivery options."
+        path="/checkout"
+        noIndex
+      />
       <div className="mx-auto max-w-4xl space-y-6">
         <div className="flex items-center">
           <button

@@ -1,5 +1,6 @@
 import { Calendar, Home, Mail, Package, Phone, Shield, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Seo from "../components/Seo"
 import { useProfile } from "../hooks/useProfile"
 
 export default function Profile() {
@@ -50,6 +51,12 @@ export default function Profile() {
 
   return (
     <div className="page-frame px-4 py-4">
+      <Seo
+        title="Profile"
+        description="View and manage your Toys profile, saved details, and order history."
+        path="/profile"
+        noIndex
+      />
       <div className="lux-header sticky top-0 z-20 rounded-2xl px-4 py-3">
         <button
           type="button"

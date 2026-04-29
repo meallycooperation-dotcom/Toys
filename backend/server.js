@@ -8,14 +8,14 @@ const PORT = process.env.PORT || 3000
 
 // ✅ MUST come first
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://toys-tau.vercel.app/',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 
 // ✅ handle preflight manually (important)
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
+  res.header('Access-Control-Allow-Origin', 'https://toys-tau.vercel.app/')
   res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   res.sendStatus(204)

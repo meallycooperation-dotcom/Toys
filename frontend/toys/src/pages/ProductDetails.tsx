@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChevronLeft, ShoppingCart } from "lucide-react"
+import { ChevronLeft, ShoppingCart, Star } from "lucide-react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { supabase, type Product, type ProductImage } from "../lib/supabase"
@@ -20,6 +20,9 @@ export default function ProductDetails() {
   const [addedToCart, setAddedToCart] = useState(false)
   const [showFullDescription, setShowFullDescription] = useState(false)
   const descriptionLimit = 180
+  const hasRatings = (product?.rating_count || 0) > 0
+  const roundedRating = Math.round((product?.average_rating || 0) * 10) / 10
+  const filledStars = Math.round(product?.average_rating || 0)
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -153,6 +156,29 @@ export default function ProductDetails() {
               <p className="text-4xl font-bold text-[color:var(--text-primary)]">
                 {product.currency} {product.price}
               </p>
+            </div>
+
+            <div className="space-y-2">
+              <p className="lux-subtitle text-sm">Rating</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: 5 }, (_, index) => index + 1).map((value) => (
+                    <Star
+                      key={value}
+                      size={18}
+                      className={value <= filledStars ? "text-[#d4af37]" : "text-[color:var(--text-muted)]"}
+                      fill={value <= filledStars ? "currentColor" : "none"}
+                    />
+                  ))}
+                </div>
+                <p className="text-sm text-[color:var(--text-muted)]">
+                  {hasRatings
+                    ? `${roundedRating.toFixed(1)} out of 5 from ${product.rating_count} review${
+                        product.rating_count === 1 ? "" : "s"
+                      }`
+                    : "No ratings yet"}
+                </p>
+              </div>
             </div>
 
             <div className="space-y-2">

@@ -16,6 +16,8 @@ export type Product = {
   is_active: boolean
   category: "male" | "female" | null
   level: "intense" | "luxurious" | "playful" | null
+  average_rating: number
+  rating_count: number
   created_at: string
   updated_at: string
 }
@@ -59,5 +61,15 @@ export type OrderItem = {
   product_id: string | null
   quantity: number
   price_at_purchase: number
+  created_at: string
+}
+
+export type ProductRating = {
+  id: string
+  product_id: string | null
+  user_id: string | null
+  order_id: string | null
+  rating: number
+  review: string | null
   created_at: string
 }

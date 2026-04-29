@@ -1,3 +1,4 @@
+import { Star } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -12,6 +13,9 @@ export default function ProductCard({ product, queryString = "" }: Props) {
   const navigate = useNavigate()
   const { addToCart } = useCart()
   const [addedToCart, setAddedToCart] = useState(false)
+  const hasRatings = (product.rating_count || 0) > 0
+  const roundedRating = Math.round((product.average_rating || 0) * 10) / 10
+  const filledStars = Math.round(product.average_rating || 0)
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -40,7 +44,13 @@ export default function ProductCard({ product, queryString = "" }: Props) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#080407] via-transparent to-transparent opacity-70" />
         <div className="absolute left-3 top-3">
-          <span className="lux-badge lux-badge-red">New</span>
+          {hasRatings ? (
+            <span className="lux-badge lux-badge-gold">
+              {roundedRating.toFixed(1)} / 5
+            </span>
+          ) : (
+            <span className="lux-badge lux-badge-red">New</span>
+          )}
         </div>
       </div>
 
@@ -49,6 +59,22 @@ export default function ProductCard({ product, queryString = "" }: Props) {
         <p className="mt-1 text-sm text-[color:var(--text-muted)]">
           {product.currency} {product.price}
         </p>
+
+        <div className="mt-2 flex items-center gap-2">
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: 5 }, (_, index) => index + 1).map((value) => (
+              <Star
+                key={value}
+                size={14}
+                className={value <= filledStars ? "text-[#d4af37]" : "text-[color:var(--text-muted)]"}
+                fill={value <= filledStars ? "currentColor" : "none"}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-[color:var(--text-muted)]">
+            {hasRatings ? `${roundedRating.toFixed(1)} (${product.rating_count})` : "No ratings yet"}
+          </span>
+        </div>
 
         <button
           onClick={handleAddToCart}
